@@ -2,7 +2,7 @@
 
 -- CREATE DATABASE IF NOT EXISTS datascience--
 
-
+-- ========================= Retrieve ===============================
 
 -- # 2. Select all columns and rows from the 'smartphones' table in the 'datascience' database
 
@@ -102,11 +102,13 @@ SELECT model, SQRT(resolution_width*resolution_width + resolution_height*resolut
 
 -- # 17. Select all smartphones with a price less than 15,000, rating greater than 80, and Snapdragon processor
 
+
 -- SELECT * FROM datascience.smartphones WHERE price < 15000 AND rating > 80 AND processor_brand = 'snapdragon'
 
 
 
 -- # 18. Select all Samsung smartphones with RAM capacity greater than 8GB
+
 
 -- SELECT * FROM datascience.smartphones WHERE brand_name = 'samsung' AND ram_capacity > 8
 
@@ -116,3 +118,67 @@ SELECT model, SQRT(resolution_width*resolution_width + resolution_height*resolut
 
 -- SELECT * FROM datascience.smartphones WHERE brand_name = 'samsung' AND processor_brand = 'snapdragon'
 
+
+-- # 20. Select all unique brand names for smartphones with price greater than 100,000
+
+-- SELECT DISTINCT(brand_name) FROM datascience.smartphones WHERE price > 100000
+
+
+-- # 21.-- Select all smartphones with processor brand Snapdragon, Exynos, or Bionic (using OR)
+
+/*SELECT * From datascience.smartphones WHERE processor_brand = 'snapdragon' OR
+processor_brand = 'exynos' OR
+processor_brand = 'bionic'*/
+
+
+
+-- # 22. Select all smartphones with processor brand in the given list (using IN)
+
+/*SELECT * From datascience.smartphones
+ WHERE processor_brand IN ('snapdragon', 'exynos','bionic','dimendcity')*/
+
+
+
+-- # 23. Select all smartphones with processor brand not in the given list (using NOT IN)
+
+/*SELECT * From datascience.smartphones
+ WHERE processor_brand NOT IN ('snapdragon', 'exynos','bionic','dimendcity')*/
+ 
+
+-- # 24 Select all smartphones with processor brand 'mediatek'
+
+-- SELECT * From datascience.smartphones WHERE processor_brand = 'mediatek'
+ 
+ -- ============================== Update =====================================
+ 
+
+
+/*UPDATE datascience.smartphones
+SET processor_brand = 'dimensity'
+WHERE processor_brand = 'mediatek'*/
+
+
+
+/*UPDATE testdb.users
+SET email = 'saif@gmailcmo',id='5',name='saif'
+where name = 'shan'
+*/
+
+
+-- ========================= Delete============================
+
+
+/*DELETE FROM datascience.smartphones
+WHERE price > 200000*/
+
+
+
+/*DELETE FROM datascience.smartphones
+WHERE primary_camera_rear > 150 AND brand_name = 'samsung'
+*/
+
+
+
+/*SELECT * FROM datascience.smartphones
+WHERE primary_camera_rear > 150 AND brand_name = 'samsung'
+*/
