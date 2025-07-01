@@ -182,3 +182,77 @@ WHERE primary_camera_rear > 150 AND brand_name = 'samsung'
 /*SELECT * FROM datascience.smartphones
 WHERE primary_camera_rear > 150 AND brand_name = 'samsung'
 */
+
+
+
+-- #======================Types of functions in SQL=====================
+
+
+-- SELECT MAX(price) FROM datascience.smartphones
+
+
+-- SELECT MIN(price) FROM datascience.smartphones
+
+-- SELECT MAX(ram_capacity) FROM datascience.smartphones
+
+-- SELECT MIN(ram_capacity) FROM datascience.smartphones
+
+
+
+-- # Find the price of costiest of sumsung phone
+
+
+
+/*SELECT MAX(price) FROM datascience.smartphones
+Where brand_name = 'samsung'
+*/
+
+
+
+/*SELECT * FROM datascience.smartphones
+Where brand_name = 'samsung' AND price = 163980
+*/
+
+
+
+/*SELECT AVG(rating) from datascience.smartphones
+where brand_name = 'apple'
+*/
+
+
+
+-- SELECT SUM(price) FROM datascience.smartphones
+
+
+
+
+/*SELECT COUNT(*) FROM datascience.smartphones
+WHERE brand_name = 'apple'
+*/
+
+
+SELECT COUNT(DISTINCT (brand_name)) FROM datascience.smartphones
+
+
+SELECT COUNT(DISTINCT (processor_brand)) FROM datascience.smartphones
+
+
+SELECT STD(screen_size) FROM datascience.smartphones
+
+
+SELECT VARIANCE(screen_size) FROM datascience.smartphones
+
+
+-- # ============ scalar Functions======================
+
+
+SELECT ABS(price - 100000) AS 'temp' FROM datascience.smartphones
+
+
+SELECT model, ROUND(SQRT(resolution_width*resolution_width + resolution_height*resolution_height)/screen_size,2) FROM datascience.smartphones
+
+
+SELECT CEIL(screen_size) FROM datascience.smartphones
+
+SELECT FLOOR(screen_size) FROM datascience.smartphones
+
