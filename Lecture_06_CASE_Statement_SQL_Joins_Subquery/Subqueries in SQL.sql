@@ -59,10 +59,49 @@ SELECT * FROM movies
 WHERE (gross - budget) = (SELECT MAX(gross - budget) FROM movies);
 
 
--- second way(order by )--
+-- second way(order by ) order by used the concept indexing--
 
 SELECT * FROM movies
 ORDER BY (gross - budget) DESC LIMIT 1
+
+
+-- 2. Find how many movies have a rating  > the avg of all the movie ratings
+-- ( find the count of above average movies )
+
+
+SELECT * FROM movies 
+WHERE score > (SELECT AVG(score) FROM movies)
+
+
+SELECT COUNT(*) FROM movies 
+WHERE score > (SELECT AVG(score) FROM movies)
+
+-- 3. Find the higest rated movie of 2000
+
+SELECT * FROM movies WHERE year = 2000 AND score = (SELECT MAX(score) FROM movies
+WHERE year = 2000)
+
+
+-- 4. Find the higest rated movie among all movies whose number of votes are > the dataset avg votes
+
+SELECT * FROM movies
+WHERE votes > (SELECT AVG (votes) FROM movies)
+
+
+SELECT * FROM movies
+WHERE score = (SELECT MAX(score) FROM movies
+WHERE votes > (SELECT AVG (votes) FROM movies))
+
+
+-- # ===============Independent Subquery - Row Subquery ( One Col Multi Rows ) ============
+
+-- # 1. Find all users who never ordered
+
+
+
+
+
+
 
 
 
