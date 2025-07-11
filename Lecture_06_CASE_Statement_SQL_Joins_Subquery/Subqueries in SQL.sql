@@ -98,6 +98,48 @@ WHERE votes > (SELECT AVG (votes) FROM movies))
 -- # 1. Find all users who never ordered
 
 
+USE Datascience;
+SELECT * FROM users2 WHERE user_id NOT IN (SELECT DISTINCT( user_id)
+FROM orders2)
+
+-- # 2. Find all the movies made by top3 directors(in terms of total gross income)
+
+
+SELECT director, SUM(gross)
+FROM movies
+GROUP BY director
+ORDER BY SUM(gross) DESC 
+LIMIT 3
+
+-- ======================= example 01=======================
+
+SELECT * FROM movies
+WHERE director IN (SELECT director
+FROM movies
+GROUP BY director
+ORDER BY SUM(gross) DESC 
+LIMIT 3)
+
+-- ===================== example 02====================
+
+WITH top_directors AS (SELECT director
+FROM movies
+GROUP BY director
+ORDER BY SUM(gross) DESC 
+LIMIT 3)
+
+SELECT * FROM movies
+WHERE director IN(SELECT * FROM top_directors);
+
+
+-- 3. Find all movies of all those actors whose filmography's avg rating > 8.5 (take 25000 votes as cutoff)
+
+USE Datascience;
+
+SELECT * FROM movies WHERE star IN (SELECT star FROM  movies
+                                   WHERE votes > 25000
+                                   GROUP BY star
+                                   HAVING AVG(score) > 8.5)
 
 
 
