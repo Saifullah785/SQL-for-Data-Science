@@ -141,9 +141,71 @@ SELECT * FROM movies WHERE star IN (SELECT star FROM  movies
                                    GROUP BY star
                                    HAVING AVG(score) > 8.5)
 
+-- =================Independent Subquery - Table Subquery (Multi COl Multi Row)=============
 
 
 
+-- 1. Find the movie with highest profits(vs order by)
+
+
+
+SELECT * FROM movies
+WHERE (year, gross-budget) IN (SELECT year, MAX(gross - budget)
+                               FROM movies GROUP BY year);
+
+
+
+-- 2. Find the highest rated movies of each genre votes cutoff of 25000
+
+
+
+SELECT * FROM movies WHERE (genre, score) IN (SELECT genre, MAX(score)
+							FROM movies
+							WHERE votes > 25000)
+							GROUP BY genre
+AND votes > 25000
+
+
+
+-- 3. Find the highest grossing movies of top 5 actor / direction combo in term of total gross income
+
+
+WITH  top_duos AS (
+SELECT star, director, MAX(gross)
+FROM movies
+GROUP BY star, director
+ORDER BY SUM(gross) DESC LIMIT 5)
+
+SELECT * FROM movies
+WHERE (star, director, gross) IN (SELECT * FROM top_duos)
+
+
+
+-- ====================== Correlated Subquery ===================
+
+-- 1. FInd all the movies that have a rating higer than the average rating of movies
+-- in the same genre (Animations)
+
+
+
+SELECT * FROM movies m1
+WHERE Score > (SELECT AVG (score) FROM movies m2 WHERE m2.genre = m1.genre)
+
+
+-- 2. Find the favorite food of each customer
+
+WITH fav_food AS (
+SELECT t2.user_id, name,f_name, COUNT(*) AS 'frequency' FROM users2 t1
+JOIN orders2 t2 ON t1.user_id = t2.user_id
+JOIN order_details2 t3 ON t2.order_id = t3.order_id
+JOIN food t4 ON t3.f_id = t4.f_id
+GROUP BY t2.user_id, t3.f_id
+)
+
+SELECT * FROM fav_food f1
+WHERE frequency = (SELECT MAX(frequency)
+					FROM fav_food f2
+					WHERE f2.user_id = f1.user_id)
 
 
 
