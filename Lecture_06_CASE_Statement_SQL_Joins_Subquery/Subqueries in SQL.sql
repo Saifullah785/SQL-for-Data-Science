@@ -208,6 +208,11 @@ WHERE frequency = (SELECT MAX(frequency)
 					WHERE f2.user_id = f1.user_id)
 
 
+-- Usage with SELECT 
+
+-- 1. Get the percentage of votes for each movie compared to the total number of votes
+USE datascience;
+ SELECT name, (votes/(SELECT SUM(votes) FROM movies))*100 FROM movies 
 
 
 
