@@ -211,8 +211,19 @@ WHERE frequency = (SELECT MAX(frequency)
 -- Usage with SELECT 
 
 -- 1. Get the percentage of votes for each movie compared to the total number of votes
+
+
+
 USE datascience;
  SELECT name, (votes/(SELECT SUM(votes) FROM movies))*100 FROM movies 
 
 
+ 
+ USE datascience;
+ SELECT name,genre, score,
+ (SELECT AVG(score) FROM movies m2 WHERE m2.genre = m1.genre) 
+ FROM movies m1
+
+
+-- USE with FROM
 
