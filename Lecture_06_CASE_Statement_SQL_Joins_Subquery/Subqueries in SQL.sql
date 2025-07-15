@@ -222,8 +222,23 @@ USE datascience;
  USE datascience;
  SELECT name,genre, score,
  (SELECT AVG(score) FROM movies m2 WHERE m2.genre = m1.genre) 
- FROM movies m1
+ FROM movies m1;
 
 
 -- USE with FROM
+
+
+
+-- `1. Display average rating of all the restaurants
+
+
+SELECT r_name, avg_rating
+FROM ( SELECT r_id, AVG (restaurant_rating) AS 'avg_rating'
+FROM orders2
+GROUP BY r_id) t1 JOIN restaurants t2
+ON t1.r_id = t2.r_id
+
+
+-- Usage with Having
+
 
