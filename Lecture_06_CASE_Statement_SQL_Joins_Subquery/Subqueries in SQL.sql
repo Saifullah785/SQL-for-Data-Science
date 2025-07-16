@@ -241,4 +241,33 @@ ON t1.r_id = t2.r_id
 
 -- Usage with Having
 
+-- 1. Find the genre having avg score > avg score of all the movies
+
+
+SELECT genre, AVG(score)
+FROM movies
+GROUP BY genre
+HAVING AVG (score) > (SELECT AVG (score) FROM movies)
+
+
+-- Subquery in INSERT
+
+
+-- Populate already created loyal_customer table with records of only those
+-- customers who have ordered food more than 3 times
+
+INSERT INTO loyal_users
+(user_id, name)
+SELECT t1.user_id, name
+FROM orders2 t1
+JOIN users2 t2  ON t1.user_id = t2.user_id
+GROUP BY user_id
+HAVING COUNT(*) > 3
+
+
+
+
+
+
+
 
