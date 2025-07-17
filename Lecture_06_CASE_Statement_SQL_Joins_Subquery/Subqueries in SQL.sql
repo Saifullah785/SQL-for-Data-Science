@@ -256,6 +256,8 @@ HAVING AVG (score) > (SELECT AVG (score) FROM movies)
 -- Populate already created loyal_customer table with records of only those
 -- customers who have ordered food more than 3 times
 
+
+USE datascience;
 INSERT INTO loyal_users
 (user_id, name)
 SELECT t1.user_id, name
@@ -263,6 +265,32 @@ FROM orders2 t1
 JOIN users2 t2  ON t1.user_id = t2.user_id
 GROUP BY user_id
 HAVING COUNT(*) > 3
+
+
+-- Subquery in UPDATE
+
+
+-- populate the money col of loya_customer table using the orders table.
+-- Provide a 10% app money to all customers based on their order value.
+
+
+UPDATE loyal_users
+SET money = (SELECT SUM(amount)
+			FROM orders2
+            WHERE orders2.user_id = loyal_users.user_id)
+
+
+
+-- Subquery in Delete
+
+-- Delete all the customers record who have never ordered
+
+USE datascience;
+
+DELETE FROM users2 
+WHERE user_id IN (SELECT user_id FROM users2
+WHERE user_id NOT IN (SELECT DISTINCT(user_id) FROM orders2))
+
 
 
 
