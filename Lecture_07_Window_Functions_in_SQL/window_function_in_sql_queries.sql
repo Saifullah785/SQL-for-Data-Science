@@ -51,14 +51,34 @@ from datascience.marks) t
 WHERE t.marks > t.branch_avg
 
 
+-- RANK / DENSE_RANK / ROW_NUMBER
+
+
+SELECT *,
+RANK() OVER(PARTITION BY branch ORDER BY marks DESC),
+DENSE_RANK() OVER(PARTITION BY branch ORDER BY marks DESC)
+FROM marks
 
 
 
+SELECT *,
+CONCAT(branch, '-', ROW_NUMBER() OVER(PARTITION BY branch))
+FROM marks
+
+
+-- 1. Find top 2 most paying customers of each month 
+
+SELECT * FROM (SELECT MONTHNAME(date) AS 'month', user_id, SUM(amount) AS 'total',
+               RANK() OVER(PARTITION BY MONTHNAME(date) ORDER BY SUM(amount) DESC) AS 'month_rank'
+               FROM orders2
+			   GROUP BY MONTHNAME(date), user_id
+               ORDER BY MONTH(date)) t
+               WHERE t.month_rank < 3
+               ORDER BY month DESC,month_rank ASC
 
 
 
-
-
+-- 2. Delete roll no from branch and marks
 
 
 
