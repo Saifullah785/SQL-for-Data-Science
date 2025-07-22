@@ -80,5 +80,39 @@ SELECT * FROM (SELECT MONTHNAME(date) AS 'month', user_id, SUM(amount) AS 'total
 
 -- 2. Delete roll no from branch and marks
 
+USE datascience;
+-- FIRST VALUE/LAST VALUE / NTH_VALUE
+
+-- 1. Find the branch toppers
+
+
+SELECT * FROM marks;
+
+SELECT *,
+FIRST_VALUE(name) OVER(ORDER BY marks DESC)
+FROM marks
+
+
+SELECT *,
+LAST_VALUE(marks) OVER(ORDER BY marks DESC)
+FROM marks
+
+-- - ================== FRAME ===========================
+
+/*A frame is a window is a subset of row within the partition that 
+determine the scope of the window function calculation .the frame
+is defined using a combination of two clauses in the window functins rows and between.
+*/
+
+SELECT *,
+FIRST_VALUE(name) OVER( PARTITION BY branch 
+						ORDER BY marks DESC
+						  ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING)
+FROM marks
+
+
+
+
+
 
 
