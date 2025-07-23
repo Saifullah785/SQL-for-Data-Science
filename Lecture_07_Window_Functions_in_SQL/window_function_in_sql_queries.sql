@@ -83,7 +83,7 @@ SELECT * FROM (SELECT MONTHNAME(date) AS 'month', user_id, SUM(amount) AS 'total
 USE datascience;
 -- FIRST VALUE/LAST VALUE / NTH_VALUE
 
--- 1. Find the branch toppers
+
 
 
 SELECT * FROM marks;
@@ -112,7 +112,20 @@ FROM marks
 
 
 
+USE datascience;
 
+-- 1. Find the branch toppers
+
+SELECT name, branch, marks FROM (SELECT *,
+FIRST_VALUE(name) OVER(PARTITION BY branch ORDER BY marks DESC) AS 'topper_name',
+FIRST_VALUE(marks) OVER(PARTITION BY branch ORDER BY marks DESC) AS 'topper_marks'
+FROM marks) t
+WHERE t.name = t.topper_name AND t.marks = t.topper_marks
+
+
+-- LEAD & LAG
+
+-- find the MOM remove growth of Zomato
 
 
 
