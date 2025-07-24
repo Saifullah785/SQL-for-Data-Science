@@ -81,7 +81,9 @@ SELECT * FROM (SELECT MONTHNAME(date) AS 'month', user_id, SUM(amount) AS 'total
 -- 2. Delete roll no from branch and marks
 
 USE datascience;
--- FIRST VALUE/LAST VALUE / NTH_VALUE
+
+
+-- ======================== FIRST VALUE/LAST VALUE / NTH_VALUE ====================
 
 
 
@@ -125,7 +127,19 @@ WHERE t.name = t.topper_name AND t.marks = t.topper_marks
 
 -- LEAD & LAG
 
+SELECT *,
+LAG(marks) OVER(PARTITION BY branch ORDER BY student_id),
+LEAD(marks) OVER(PARTITION BY branch ORDER BY student_id)
+FROM marks
+
+
+
 -- find the MOM remove growth of Zomato
 
+SELECT MONTHNAME(date), SUM(amount),
+((SUM(amount) - LAG(SUM(amount)) OVER(ORDER BY MONTH(date)))/LAG(SUM(amount)) OVER(ORDER BY MONTH(date)))*100
+FROM orders2
+GROUP BY MONTHNAME(date)
+ORDER BY MONTH(date) ASC
 
 
